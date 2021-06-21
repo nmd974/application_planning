@@ -15,6 +15,8 @@ class ActivityController extends Controller
     public function index()
     {
         //
+        $activities = Activity::all();
+        return view('activities.index', ["activities" => $activities]);
     }
 
     /**
@@ -25,6 +27,8 @@ class ActivityController extends Controller
     public function create()
     {
         //
+        return view('activities.create');
+
     }
 
     /**
@@ -36,6 +40,17 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'label' => 'required|max:255'
+        ]);
+
+        $activity = new Activity();
+        $activity->label = $request['label'];
+
+        if($activity->save()){
+            return redirect()->route('activities.index')->with(['messageSuccess' => "Activité créée avec succès"]);
+        }
+        return redirect()->route('activities.index')->with(['messageError' => "Echec lors de la création de l'activité"]);
     }
 
     /**
@@ -58,6 +73,7 @@ class ActivityController extends Controller
     public function edit(Activity $activity)
     {
         //
+        return view('activities.update');
     }
 
     /**

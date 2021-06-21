@@ -21,6 +21,7 @@ class CreateUserActivitiesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('activity_id');
             $table->foreign('activity_id')->references('id')->on('activities');
+            $table->timestamps();
         });
     }
 
