@@ -17,6 +17,7 @@ class CreateUserActivitiesTable extends Migration
             $table->id();
             $table->string('label');
             $table->date('day');
+            $table->boolean('archived');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('activity_id');

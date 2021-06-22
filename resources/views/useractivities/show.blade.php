@@ -1,53 +1,51 @@
+
+
 @extends('layout.layout')
- 
+
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>{{$userActivity[0]->label}}</h2>
+<div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create_activitiesLabel">Créer une activité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('useractivities.create') }}"> Ajouter une association</a>
-            </div>
+            <form method="post" action="{{ route('useractivities.store') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="label">
+                        <label>Libellé<span class="text-danger">*</span></label>
+                    </div>
+                    <legend>Début</legend>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Date de début</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_time" class="form-label">Heure de début</label>
+                        <input type="time" class="form-control" id="start_time" name="start_time">
+                    </div>
+                    <legend>Fin</legend>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_time" class="form-label">Heure de fin</label>
+                        <input type="time" class="form-control" id="end_time" name="end_time">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success" name="create">Créer</button>
+                </div>
+                <input type="hidden" name="_token" value="{{ Session::token() }}">
+            </form>
         </div>
     </div>
-   
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-   
-    <table class="table table-bordered">
-        <tr>
-            <th>No</th>
-            <th>Label</th>
-            <th>Day</th>
-            <th>user_id</th>
-            <th>activity_id</th>
+</div>
 
-            <th width="250px">Actions</th>
-        </tr>
-        @foreach ($tableauUsers as $user)
-        <tr>
-            <td>{{ ++$i }}</td>
-            <td>{{ $user }}</td>
-            <td>
-                <form action="{{ route('useractivities.destroy',$user->id) }}" method="POST">
-   
-                    <a class="btn btn-info" href="{{ route('useractivities.show',$user->id) }}">Show</a>
-    
-                    <a class="btn btn-primary" href="{{ route('useractivities.edit',$user->id) }}">Edit</a>
-   
-                    @csrf
-                    @method('DELETE')
-      
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </table>
-  
-      
+
+
 @endsection

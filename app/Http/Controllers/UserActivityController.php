@@ -42,14 +42,23 @@ class UserActivityController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedData = $request->validate([
+        $this->validate($request, [
             'label' => 'required|max:255',
-            'day' => 'required',
+            'id' => 'required|integer',
+            'day' => 'required|date',
+            'users' => 'required'
         ]);
-    
-        $useractivities = UserActivity::create($validatedData);
-    
-        return redirect('/useractivities')->with('success', 'Association crée avec succèss');
+        
+        $activity = new UserActivity();
+        $activity->label = $request['label'];
+        $activity->day = date("Y-m-d", strtotime($request["day"]));
+        $activity->archived = false;
+        $activity->user_id = $request['users'];
+        $activity->activity_id = $request['id'];
+
+        if($activity->save()){
+            return redirect()->route('useractivities.edit', $request['id'])->with(['messageSuccess' => "Activité créée avec succès"]);
+        }
     }
 
     /**
@@ -64,11 +73,12 @@ class UserActivityController extends Controller
         $useractivities = UserActivity::where(['activity_id' => $id])->get();
         $tableauUsers = [];
         $userActivity = Activity::where(['id' => $id])->get();
+        $users = User::all();
         foreach($useractivities as $useractivitie) {
             $valueTemp = User::where(['id' => $useractivitie->user_id])->get();
             $tableauUsers[] =  $valueTemp->first_name . $valueTemp->last_name;
         }
-        return view('useractivities.show', ['useractivities' => $useractivities, 'tableauUsers' => $tableauUsers, 'userActivity' => $userActivity]);
+        return view('useractivities.edit', ['useractivities' => $useractivities, 'tableauUsers' => $tableauUsers, 'userActivity' => $userActivity, 'users' => $users]);
     }
 
     /**
@@ -103,5 +113,12 @@ class UserActivityController extends Controller
     public function destroy(UserActivity $userActivity)
     {
         //
+        $useractivities = UserActivity::find($id);
+        $useractivities->archived = true;
+
+        if($useractivities->update()){
+            return redirect()->route('useractivities.index')->with(['messageSuccess' => "Association supprimée avec succès"]);
+        }
+        return redirect()->route('useractivities.create')->with(['messageError' => "Echec lors de la suppression de l'association"]);
     }
 }
