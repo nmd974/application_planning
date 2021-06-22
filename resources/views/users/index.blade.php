@@ -44,18 +44,18 @@
             actif
             @endif
             </td>
-            <td>{{ $user->role_id }}</td>
+            <td>{{ App\Models\Role::where(['id' => $user->role_id])->get('label')[0]->label }}</td>
             <td>
                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
    
                     
     
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}"><i class="fas fa-pen"></i></a>
    
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </form>
             </td>
         </tr>
