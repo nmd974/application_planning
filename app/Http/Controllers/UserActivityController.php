@@ -76,7 +76,7 @@ class UserActivityController extends Controller
         $users = User::all();
         foreach($useractivities as $useractivitie) {
             $valueTemp = User::find($useractivitie->user_id);
-            $tableauUsers[] =  $valueTemp->first_name . $valueTemp->last_name;
+            $tableauUsers[] =  $valueTemp->first_name . " " . $valueTemp->last_name;
         }
         return view('useractivities.edit', ['useractivities' => $useractivities, 'tableauUsers' => $tableauUsers, 'userActivity' => $userActivity, 'users' => $users]);
     }

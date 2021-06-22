@@ -63,11 +63,26 @@
     <table class="table table-bordered">
         <tr>
             <th>Utilisateur</th>
+            <th>Actions</th>
+
         </tr>
         @foreach ($tableauUsers as $user)
         <tr>
-            <td>{{ $user }}</td>
 
+            <td>{{ $user }}</td>
+            <td>
+                <form action="{{ route('useractivities.destroy',$useractivities->id) }}" method="POST">
+   
+                    <a class="btn btn-info" href="{{ route('useractivities.show',$useractivities->id) }}">Show</a>
+    
+                    <a class="btn btn-primary" href="{{ route('useractivities.edit',$useractivities->id) }}">Edit</a>
+   
+                    @csrf
+                    @method('DELETE')
+      
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
         </tr>
         @endforeach
     </table>
