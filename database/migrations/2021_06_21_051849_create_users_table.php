@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->date('birthday');
             $table->boolean('state');
             $table->foreignId('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('roles')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

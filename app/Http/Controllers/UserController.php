@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $users = User::all();
         $roles = Role::all();
-    
+        
         return view('users.index',compact('users'),['roles'=> $roles])
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }

@@ -11,8 +11,7 @@
             </div>
         </div>
     </div>
-   
-    @if ($errors->any())
+   z
         <div class="alert alert-danger">
             <strong>Oops!</strong> Une erreur est survenue.<br><br>
             <ul>
