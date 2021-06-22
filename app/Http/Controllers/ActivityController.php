@@ -69,9 +69,11 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $activity)
+    public function show($id)
     {
         //
+        $activity = Activity::find($id);
+        return json_encode($activity);
     }
 
     /**
