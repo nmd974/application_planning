@@ -54,12 +54,7 @@
                     <strong>Anniversaire</strong>
                     <input type="text" name="birthday" value="{{ $user->birthday }}" class="form-control" placeholder="birthday">
                 </div>
-            </div>            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Etat</strong>
-                    <input type="text" name="state" value="{{ $user->state }}" class="form-control" placeholder="state">
-                </div>
-            </div>            <div class="col-xs-12 col-sm-12 col-md-12">
+            </div>                 <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Rôle</strong>
                     <input type="text" name="role_id" value="{{ $user->role_id }}" class="form-control" placeholder="role_id">
