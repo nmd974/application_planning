@@ -46,7 +46,7 @@ class UserController extends Controller
             'birthday' => 'required',
             'role_id' => 'required',
         ]);
-        $request['state'] = "enabled";
+        $request['state'] = true;
     
         User::create($request->all());
      

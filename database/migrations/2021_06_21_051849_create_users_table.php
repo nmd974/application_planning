@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('promotion');
             $table->date('birthday');
-            $table->enum('state', ['enabled', 'disabled']);
+            $table->boolean('state');
             $table->foreignId('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
