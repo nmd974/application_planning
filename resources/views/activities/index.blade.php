@@ -152,17 +152,19 @@
                 <td class="align-middle">{{ $u->start }}</td>
                 <td class="align-middle">{{ $u->end }}</td>
                 <td class="d-flex justify-content-around flex-wrap">
-                    <button type="button" class="btn btn-success me-4" data-bs-toggle="modal" data-bs-target="#{{"edit_activities_" . $u->id}}">
+                    <button type="button" class="btn btn-success me-4" data-id={{$u->id}} data-action="update">
                         <i class="fas fa-pen"></i>
                     </button>
                     
-                    <button type="button" class="btn btn-danger me-4 btn_update" data-id={{$u->id}} data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $u->id}}">
+                    <button type="button" class="btn btn-danger me-4" data-id={{$u->id}} data-action="delete" data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $u->id}}">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
-
-                    <button type="button" class="btn btn-primary me-4" data-id={{$u->id}} data-bs-toggle="modal" data-bs-target="#{{"bookmark_activities_" . $u->id}}">
-                        <i class="fa fa-bookmark" aria-hidden="true"></i>
-                    </button>
+                    
+                    <a href="{{route("useractivities.show" , $u->id)}}">
+                        <button type="button" class="btn btn-primary me-4">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                        </button>
+                    </a>
                 </td>
             </tr>
             @endforeach
@@ -176,15 +178,67 @@
 </div>
 
 <script>
-    var btn = document.querySelectorAll(".btn_update");
+    var btn = document.querySelectorAll(".table-responsive tbody tr td button");
+    console.log("test");
     btn.forEach(element => {
+        console.log(element);
         element.addEventListener('click', (e) => {
             var id = element.getAttribute("data-id");
+            var action = element.getAttribute("data-action");
             console.log(id);
-            
+            if(action === "update"){
+                // axios.get(`http://127.0.0.1:80/activities/${id}`)
+                // .then(function (response) {
+                //     // handle success
+                //     console.log(response);
+                // })
+                // .catch(function (error) {
+                //     // handle error
+                //     console.log(error);
+                // });
+                //On crée un objet XMLHttpRequest
+                let xhr = new XMLHttpRequest();
+
+                //On initialise notre requête avec open()
+                xhr.open("GET", `http://127.0.0.1:80/activities/${id}`);
+
+                //On veut une réponse au format JSON
+                xhr.responseType = "json";
+
+                //On envoie la requête
+                xhr.send();
+
+                //Dès que la réponse est reçue...
+                xhr.onload = function(){
+                    //Si le statut HTTP n'est pas 200...
+                    if (xhr.status != 200){ 
+                        //...On affiche le statut et le message correspondant
+                        alert("Erreur " + xhr.status + " : " + xhr.statusText);
+                    //Si le statut HTTP est 200, on affiche le nombre d'octets téléchargés et la réponse
+                    }else{ 
+                        alert(xhr.response.length + " octets  téléchargés\n" + JSON.stringify(xhr.response));
+                    }
+                };
+
+                //Si la requête n'a pas pu aboutir...
+                xhr.onerror = function(){
+                    alert("La requête a échoué");
+                };
+
+                //Pendant le téléchargement...
+                xhr.onprogress = function(event){
+                    //lengthComputable = booléen; true si la requête a une length calculable
+                    if (event.lengthComputable){
+                        //loaded = contient le nombre d'octets téléchargés
+                        //total = contient le nombre total d'octets à télécharger
+                        alert(event.loaded + " octets reçus sur un total de " + event.total);
+                    }
+                };
+            }else{
+
+            }
             
         })
-
     })
-</script>
-@endsection
+    </script>
+    @endsection
