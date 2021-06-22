@@ -1,10 +1,10 @@
-@extends('users.layout')
+@extends('layout.layout')
    
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edit user</h2>
+                <h2>Modifier un utilisateur</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('users.index') }}"> Retour</a>
@@ -22,7 +22,7 @@
             </ul>
         </div>
     @endif
-  
+     <!-- Formulaire de modification d'user -->
     <form action="{{ route('users.update',$user->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -31,13 +31,13 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Nom</strong>
-                    <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control" placeholder="last_name">
+                    <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control" placeholder="Nom">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Prénom</strong>
-                    <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control" placeholder="first_name">
+                    <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control" placeholder="Prénom">
                 </div>
             </div>            <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -51,8 +51,8 @@
                 </div>
             </div>            <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Anniversaire</strong>
-                    <input type="text" name="birthday" value="{{ $user->birthday }}" class="form-control" placeholder="birthday">
+                    <strong>Date de naissance</strong>
+                    <input type="date" name="birthday" value="{{ $user->birthday }}" class="form-control" placeholder="date de naissance">
                 </div>
             </div>                 <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">

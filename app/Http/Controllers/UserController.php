@@ -16,9 +16,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-
+        $roles = Role::all();
     
-        return view('users.index',compact('users'))
+        return view('users.index',compact('users'),['roles'=> $roles])
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -66,7 +66,6 @@ class UserController extends Controller
      public function show(User $user)
     {
         
-        return view('users.show',compact('user'));
     }
 
     /**

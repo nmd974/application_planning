@@ -150,7 +150,7 @@
                 @csrf
                 
                 <div class="modal-body">
-                    <p>Confirmez vous la suppression de l'utilisateur : "{{$u->first_name }} {{$u->last_name }}"</p> 
+                    <p>Confirmez vous la suppression de l'activité : {{$u->label }}</p> 
                 </div>
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                 <div class="modal-footer">

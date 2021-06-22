@@ -1,4 +1,4 @@
-@extends('users.layout')
+@extends('layout.layout')
   
 @section('content')
 <div class="row">
@@ -22,7 +22,7 @@
         </ul>
     </div>
 @endif
-   
+   <!-- Formulaire de création d'user -->
 <form action="{{ route('users.store') }}" method="POST">
     @csrf
   
@@ -30,31 +30,31 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Nom</strong>
-                <input type="text" name="last_name" class="form-control" placeholder="Name">
+                <input type="text" name="last_name" class="form-control" placeholder="Nom">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Prénom</strong>
-                <input type="text" name="first_name" class="form-control" placeholder="Name">
+                <input type="text" name="first_name" class="form-control" placeholder="Prénom">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Adresse mail</strong>
-                <input type="text" name="email" class="form-control" placeholder="Name">
+                <input type="text" name="email" class="form-control" placeholder="Adresse mail">
             </div>
         </div>        
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Promotion</strong>
-                <input type="text" name="promotion" class="form-control" placeholder="Name">
+                <input type="text" name="promotion" class="form-control" placeholder="Promotion">
             </div>
         </div>        
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Anniversaire</strong>
-                <input type="date" name="birthday" class="form-control" placeholder="Name">
+                <strong>Date de naissance</strong>
+                <input type="date" name="birthday" class="form-control" placeholder="Date de naissance">
             </div>
         </div>   
         <div class="col-xs-12 col-sm-12 col-md-12">

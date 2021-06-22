@@ -1,4 +1,4 @@
-@extends('users.layout')
+@extends('layout.layout')
  
 @section('content')
     <div class="row">
@@ -17,7 +17,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-   
+      <!-- Affichage des users -->
     <table class="table table-bordered">
         <tr>
             <th>No</th>
@@ -48,7 +48,7 @@
             <td>
                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+                    
     
                     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
    
