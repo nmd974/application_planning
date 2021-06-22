@@ -43,48 +43,6 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="create_activitiesLabel">Créer une activité</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="{{ route('activities.store') }}">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="label">
-                        <label>Libellé<span class="text-danger">*</span></label>
-                    </div>
-                    <legend>Début</legend>
-                    <div class="mb-3">
-                        <label for="start_date" class="form-label">Date de début</label>
-                        <input type="date" class="form-control" id="start_date" name="start_date">
-                    </div>
-                    <div class="mb-3">
-                        <label for="start_time" class="form-label">Heure de début</label>
-                        <input type="time" class="form-control" id="start_time" name="start_time">
-                    </div>
-                    <legend>Fin</legend>
-                    <div class="mb-3">
-                        <label for="end_date" class="form-label">Date de fin</label>
-                        <input type="date" class="form-control" id="end_date" name="end_date">
-                    </div>
-                    <div class="mb-3">
-                        <label for="end_time" class="form-label">Heure de fin</label>
-                        <input type="time" class="form-control" id="end_time" name="end_time">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-success" name="create">Créer</button>
-                </div>
-                <input type="hidden" name="_token" value="{{ Session::token() }}">
-            </form>
-        </div>
-    </div>
-</div>
 <!-- *******************************************************************************************************************************-->
 <!-- ZONE UPDATE AND DELETE -->
 <!-- TABLE poste -->
@@ -194,17 +152,18 @@
                 <td class="align-middle">{{ $u->start }}</td>
                 <td class="align-middle">{{ $u->end }}</td>
                 <td class="d-flex justify-content-around flex-wrap">
-                    <button type="button" class="btn btn-success me-4" data-bs-toggle="modal" data-bs-target="#{{"edit_activities_" . $u->id}}">
+                    <button type="button" class="btn btn-success me-4" data-id={{$u->id}} data-action="update">
                         <i class="fas fa-pen"></i>
                     </button>
                     
-                    <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $u->id}}">
+                    <button type="button" class="btn btn-danger me-4" data-id={{$u->id}} data-action="delete" data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $u->id}}">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
+                    
                     <a href="{{route("useractivities.show" , $u->id)}}">
-                    <button type="button" class="btn btn-primary me-4">
-                        <i class="fa fa-bookmark" aria-hidden="true"></i>
-                    </button>
+                        <button type="button" class="btn btn-primary me-4">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                        </button>
                     </a>
                 </td>
             </tr>
@@ -218,4 +177,68 @@
     </table>
 </div>
 
-@endsection
+<script>
+    var btn = document.querySelectorAll(".table-responsive tbody tr td button");
+    console.log("test");
+    btn.forEach(element => {
+        console.log(element);
+        element.addEventListener('click', (e) => {
+            var id = element.getAttribute("data-id");
+            var action = element.getAttribute("data-action");
+            console.log(id);
+            if(action === "update"){
+                // axios.get(`http://127.0.0.1:80/activities/${id}`)
+                // .then(function (response) {
+                //     // handle success
+                //     console.log(response);
+                // })
+                // .catch(function (error) {
+                //     // handle error
+                //     console.log(error);
+                // });
+                //On crée un objet XMLHttpRequest
+                let xhr = new XMLHttpRequest();
+
+                //On initialise notre requête avec open()
+                xhr.open("GET", `http://127.0.0.1:80/activities/${id}`);
+
+                //On veut une réponse au format JSON
+                xhr.responseType = "json";
+
+                //On envoie la requête
+                xhr.send();
+
+                //Dès que la réponse est reçue...
+                xhr.onload = function(){
+                    //Si le statut HTTP n'est pas 200...
+                    if (xhr.status != 200){ 
+                        //...On affiche le statut et le message correspondant
+                        alert("Erreur " + xhr.status + " : " + xhr.statusText);
+                    //Si le statut HTTP est 200, on affiche le nombre d'octets téléchargés et la réponse
+                    }else{ 
+                        alert(xhr.response.length + " octets  téléchargés\n" + JSON.stringify(xhr.response));
+                    }
+                };
+
+                //Si la requête n'a pas pu aboutir...
+                xhr.onerror = function(){
+                    alert("La requête a échoué");
+                };
+
+                //Pendant le téléchargement...
+                xhr.onprogress = function(event){
+                    //lengthComputable = booléen; true si la requête a une length calculable
+                    if (event.lengthComputable){
+                        //loaded = contient le nombre d'octets téléchargés
+                        //total = contient le nombre total d'octets à télécharger
+                        alert(event.loaded + " octets reçus sur un total de " + event.total);
+                    }
+                };
+            }else{
+
+            }
+            
+        })
+    })
+    </script>
+    @endsection
