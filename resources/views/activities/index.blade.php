@@ -201,11 +201,9 @@
                     <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $u->id}}">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
-                    <a href="{{route("useractivities.show" , $u->id)}}">
-                    <button type="button" class="btn btn-primary me-4">
+                    <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#{{"bookmark_activities_" . $u->id}}">
                         <i class="fa fa-bookmark" aria-hidden="true"></i>
                     </button>
-                    </a>
                 </td>
             </tr>
             @endforeach
