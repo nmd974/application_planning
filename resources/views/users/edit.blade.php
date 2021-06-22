@@ -57,7 +57,11 @@
             </div>                 <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Rôle</strong>
-                    <input type="text" name="role_id" value="{{ $user->role_id }}" class="form-control" placeholder="role_id">
+                    <select name="role_id" class="form-control">
+                @foreach($roles as $role)
+                <option value='{{ $role->id }}'>{{ $role->label }}</option>
+                @endforeach
+                </select>
                 </div>
             </div>
             

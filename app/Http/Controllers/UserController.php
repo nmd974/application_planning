@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::all();
+
     
         return view('users.index',compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -26,8 +28,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function create()
-    {
-        return view('users.create');
+    {        
+        $roles = Role::all();
+        return view('users.create', ['roles'=> $roles]);
     }
 
     /**
@@ -74,8 +77,8 @@ class UserController extends Controller
      */
      public function edit(User $user)
     {
-        
-        return view('users.edit',compact('user'));
+        $roles = Role::all();
+        return view('users.edit',compact('user'), ['roles' => $roles]);
     }
 
     /**

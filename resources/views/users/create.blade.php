@@ -60,7 +60,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Rôle</strong>
-                <input type="text" name="role_id" class="form-control" placeholder="1/2">
+                <select name="role_id" class="form-control">
+                @foreach($roles as $role)
+                <option value='{{ $role->id }}'>{{ $role->label }}</option>
+                @endforeach
+                </select>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
