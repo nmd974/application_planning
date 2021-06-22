@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::get('/', function () {
 use App\Http\Controllers\UserController;
   
 Route::resource('users', UserController::class);
+Route::resource('activities', ActivityController::class);
