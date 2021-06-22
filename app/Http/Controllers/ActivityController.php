@@ -17,7 +17,7 @@ class ActivityController extends Controller
     {
         //
         $activities = Activity::where(['archived' => false])->get();
-        $users = User::where(['archived' => false])->get();
+        $users = User::where(['state' => true])->get();
         return view('activities.index', ['activities' => $activities, 'users' => $users]);
     }
 
