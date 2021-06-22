@@ -39,7 +39,11 @@
             <td>{{ $user->email }}</td>
             <td>{{ $user->promotion }}</td>
             <td>{{ $user->birthday }}</td>
-            <td>{{ $user->state }}</td>
+            <td>
+            @if ($user->state ==1)
+            actif
+            @endif
+            </td>
             <td>{{ $user->role_id }}</td>
             <td>
                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
@@ -58,6 +62,5 @@
         @endforeach
     </table>
   
-    {!! $users->links() !!}
       
 @endsection
