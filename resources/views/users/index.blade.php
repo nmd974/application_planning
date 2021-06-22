@@ -191,6 +191,8 @@
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
 
+                    @csrf
+                    @method('DELETE')
                 </td>
             </tr>
             @endforeach
@@ -199,6 +201,7 @@
                 <td class="align-middle" colspan="10">Vous n'avez pas d'utilisateur enregistrées</td>
             </tr>
             @endif
+            </td>
         </tbody>
     </table>
 </div>
