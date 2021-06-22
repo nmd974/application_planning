@@ -57,7 +57,7 @@ class UserActivityController extends Controller
         $activity->activity_id = $request['id'];
 
         if($activity->save()){
-            return redirect()->route('useractivities.edit', $request['id'])->with(['messageSuccess' => "Activité créée avec succès"]);
+            return redirect()->route('useractivities.show', $request['id'])->with(['messageSuccess' => "Activité créée avec succès"]);
         }
     }
 
@@ -75,7 +75,7 @@ class UserActivityController extends Controller
         $userActivity = Activity::where(['id' => $id])->get();
         $users = User::all();
         foreach($useractivities as $useractivitie) {
-            $valueTemp = User::where(['id' => $useractivitie->user_id])->get();
+            $valueTemp = User::find($useractivitie->user_id);
             $tableauUsers[] =  $valueTemp->first_name . $valueTemp->last_name;
         }
         return view('useractivities.edit', ['useractivities' => $useractivities, 'tableauUsers' => $tableauUsers, 'userActivity' => $userActivity, 'users' => $users]);
