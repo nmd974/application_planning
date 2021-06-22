@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserActivity;
+use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserActivityController extends Controller
@@ -15,6 +17,10 @@ class UserActivityController extends Controller
     public function index()
     {
         //
+        $useractivities = UserActivity::all();
+
+    
+        return view('useractivities.index',compact('useractivities'));
     }
 
     /**
@@ -36,6 +42,14 @@ class UserActivityController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'label' => 'required|max:255',
+            'day' => 'required',
+        ]);
+    
+        $useractivities = UserActivity::create($validatedData);
+    
+        return redirect('/useractivities')->with('success', 'Association crée avec succèss');
     }
 
     /**
@@ -44,9 +58,17 @@ class UserActivityController extends Controller
      * @param  \App\Models\UserActivity  $userActivity
      * @return \Illuminate\Http\Response
      */
-    public function show(UserActivity $userActivity)
+    public function show($id)
     {
         //
+        $useractivities = UserActivity::where(['activity_id' => $id])->get();
+        $tableauUsers = [];
+        $userActivity = Activity::where(['id' => $id])->get();
+        foreach($useractivities as $useractivitie) {
+            $valueTemp = User::where(['id' => $useractivitie->user_id])->get();
+            $tableauUsers[] =  $valueTemp->first_name . $valueTemp->last_name;
+        }
+        return view('useractivities.show', ['useractivities' => $useractivities, 'tableauUsers' => $tableauUsers, 'userActivity' => $userActivity]);
     }
 
     /**

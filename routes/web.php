@@ -29,3 +29,8 @@ Route::resource('roles', RoleController::class);
 use App\Http\Controllers\ActivityController;
   
 Route::resource('activities', ActivityController::class);
+
+use App\Http\Controllers\UserActivityController;
+  
+Route::resource('useractivities', UserActivityController::class);
+
