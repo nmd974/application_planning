@@ -18,6 +18,7 @@ class CreateActivitiesTable extends Migration
             $table->string('label');
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->boolean('archived');
             $table->timestamps();
         });
     }
