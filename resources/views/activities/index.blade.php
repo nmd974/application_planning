@@ -152,7 +152,7 @@
                 <td class="align-middle">{{ $u->start }}</td>
                 <td class="align-middle">{{ $u->end }}</td>
                 <td class="d-flex justify-content-around flex-wrap">
-                    <button type="button" class="btn btn-success me-4" data-id={{$u->id}} data-action="update">
+                    <button type="button" class="btn btn-success me-4" data-id={{$u->id}} data-action="update" data-bs-toggle="modal" data-bs-target="#{{"edit_activities_" . $u->id}}">
                         <i class="fas fa-pen"></i>
                     </button>
                     
@@ -216,7 +216,7 @@
                         alert("Erreur " + xhr.status + " : " + xhr.statusText);
                     //Si le statut HTTP est 200, on affiche le nombre d'octets téléchargés et la réponse
                     }else{ 
-                        alert(xhr.response.length + " octets  téléchargés\n" + JSON.stringify(xhr.response));
+                        console.log(xhr.response);
                     }
                 };
 
