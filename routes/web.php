@@ -33,4 +33,3 @@ Route::resource('activities', ActivityController::class);
 use App\Http\Controllers\UserActivityController;
   
 Route::resource('useractivities', UserActivityController::class);
-
