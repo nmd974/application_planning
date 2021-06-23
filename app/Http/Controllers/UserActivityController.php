@@ -6,6 +6,7 @@ use App\Models\UserActivity;
 use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserActivityController extends Controller
 {
@@ -70,9 +71,9 @@ class UserActivityController extends Controller
     public function show($id)
     {
         //
-        $useractivities = UserActivity::where(['activity_id' => $id])->get();
+        $useractivities = UserActivity::where('activity_id', '=', $id)->get();
         $tableauUsers = [];
-        $userActivity = Activity::where(['id' => $id])->get();
+        $userActivity = Activity::find($id);
         $users = User::all();
         foreach($useractivities as $useractivitie) {
             $valueTemp = User::find($useractivitie->user_id);
@@ -87,9 +88,10 @@ class UserActivityController extends Controller
      * @param  \App\Models\UserActivity  $userActivity
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserActivity $userActivity)
+    public function edit($id)
     {
         //
+
     }
 
     /**
@@ -120,5 +122,25 @@ class UserActivityController extends Controller
             return redirect()->route('useractivities.index')->with(['messageSuccess' => "Association supprimée avec succès"]);
         }
         return redirect()->route('useractivities.create')->with(['messageError' => "Echec lors de la suppression de l'association"]);
+    }
+
+    /**
+     * Display activities for a user
+     *
+     * @param  \App\Models\UserActivity  $userActivity
+     * @return \Illuminate\Http\Response
+     */
+    public function show_planning($id)
+    {
+        //
+
+        $response = array();
+        $content = DB::table('user_activities')
+            ->where('user_id', '=', $id)
+            ->where('day', '=', date("Y-m-d"))
+            ->get();
+        return json_encode($content);
+
+
     }
 }

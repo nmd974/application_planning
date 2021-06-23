@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserActivityController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\UserController;
-  
 Route::resource('users', UserController::class);
-
-use App\Http\Controllers\RoleController;
-  
-Route::resource('roles', RoleController::class);
-
-use App\Http\Controllers\ActivityController;
-  
-Route::resource('activities', ActivityController::class);
-
-use App\Http\Controllers\UserActivityController;
-  
+Route::resource('roles', RoleController::class);  
+Route::resource('activities', ActivityController::class);  
 Route::resource('useractivities', UserActivityController::class);
 
+Route::get('/planning/{id}', [
+    'uses' => 'App\Http\Controllers\UserActivityController@show_planning'
+]);

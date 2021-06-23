@@ -94,6 +94,51 @@
         </div>
     </div>
 </div>
+{{-- <div class="modal fade" id="edit_activity" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_activities_Label">Modifier une activité</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" action="{{ route('activities.update', $u->id) }}">
+                @csrf
+                @method('patch')
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="label" value="">
+                        <label>Libellé<span class="text-danger">*</span></label>
+                    </div>
+                    <legend>Début</legend>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Date de début</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_time" class="form-label">Heure de début</label>
+                        <input type="time" class="form-control" id="start_time" name="start_time" value="">
+                    </div>
+                    <legend>Fin</legend>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date"  value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_time" class="form-label">Heure de fin</label>
+                        <input type="time" class="form-control" id="end_time" name="end_time"  value="">
+                    </div>
+                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="action" value="update">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success" name="update">Modifier</button>
+                </div>
+                <input type="hidden" name="_token" value="{{ Session::token() }}">
+            </form>
+        </div>
+    </div>
+</div> --}}
 <!-- *******************************************************************************************************************************-->
 <!-- *******************************************************************************************************************************-->
 <div class="modal fade" id="delete_activities_{{$u->id}}" tabindex="-1" aria-labelledby="delete_activities_{{$u->id}}Label" aria-hidden="true">
@@ -187,50 +232,23 @@
             var action = element.getAttribute("data-action");
             console.log(id);
             if(action === "update"){
-                // axios.get(`http://127.0.0.1:80/activities/${id}`)
-                // .then(function (response) {
-                //     // handle success
-                //     console.log(response);
-                // })
-                // .catch(function (error) {
-                //     // handle error
-                //     console.log(error);
-                // });
-                //On crée un objet XMLHttpRequest
                 let xhr = new XMLHttpRequest();
-
-                //On initialise notre requête avec open()
                 xhr.open("GET", `http://127.0.0.1:80/activities/${id}`);
-
-                //On veut une réponse au format JSON
                 xhr.responseType = "json";
-
-                //On envoie la requête
                 xhr.send();
-
-                //Dès que la réponse est reçue...
                 xhr.onload = function(){
-                    //Si le statut HTTP n'est pas 200...
                     if (xhr.status != 200){ 
-                        //...On affiche le statut et le message correspondant
                         alert("Erreur " + xhr.status + " : " + xhr.statusText);
-                    //Si le statut HTTP est 200, on affiche le nombre d'octets téléchargés et la réponse
                     }else{ 
                         console.log(xhr.response);
+
                     }
                 };
-
-                //Si la requête n'a pas pu aboutir...
                 xhr.onerror = function(){
                     alert("La requête a échoué");
                 };
-
-                //Pendant le téléchargement...
                 xhr.onprogress = function(event){
-                    //lengthComputable = booléen; true si la requête a une length calculable
                     if (event.lengthComputable){
-                        //loaded = contient le nombre d'octets téléchargés
-                        //total = contient le nombre total d'octets à télécharger
                         alert(event.loaded + " octets reçus sur un total de " + event.total);
                     }
                 };

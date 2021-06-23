@@ -1,5 +1,5 @@
 @extends('layout.layout')
- 
+
 @section('content')
 <div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -11,26 +11,26 @@
             <form method="post" action="{{ route('useractivities.store') }}">
                 @csrf
                 <div class="modal-body">
-                    <legend>{{ $userActivity[0]->label }}</legend>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="label">
-                            <label>Libellé<span class="text-danger">*</span></label>
-                        </div>
-                        <div class="mb-3">
-                            <label for="day" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="day" name="day">
-                        </div>
+                    <legend>{{ $userActivity->label }}</legend>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="label">
+                        <label>Libellé<span class="text-danger">*</span></label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="day" name="day">
+                    </div>
                     <div class="mb-3">
                         <select class="form-select" name="users" id="users_select">
-                        @if ($users)
+                            @if ($users)
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ucfirst($user->first_name) }} {{ucfirst($user->last_name) }}</option>
+                            <option value="{{ $user->id }}">{{ucfirst($user->first_name) }} {{ucfirst($user->last_name) }}</option>
                             @endforeach
                             @else
-                                <option selected>Veuillez ajouter des utilisateurs</option>
+                            <option selected>Veuillez ajouter des utilisateurs</option>
                             @endif
                         </select>
-                        <input type="hidden" name="id" value="{{ $userActivity[0]->id }}">
+                        <input type="hidden" name="id" value="{{ $userActivity->id }}">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -43,9 +43,9 @@
     </div>
 </div>
 
-    <div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between">
     <div>
-        <h2>{{$userActivity[0]->label}}</h2>
+        <h2>{{$userActivity->label}}</h2>
     </div>
     <div>
         <button type="button" class="btn btn-success mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_activities">
@@ -53,39 +53,40 @@
         </button>
     </div>
 </div>
-   
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-   
-    <table class="table table-bordered">
-        <tr>
-            <th>Utilisateur</th>
-            <th>Actions</th>
 
-        </tr>
-        @foreach ($tableauUsers as $user)
-        <tr>
+@if ($message = Session::get('success'))
+<div class="alert alert-success">
+    <p>{{ $message }}</p>
+</div>
+@endif
 
-            <td>{{ $user }}</td>
-            <td>
-                <form action="{{ route('useractivities.destroy',$useractivities->id) }}" method="POST">
-   
-                    <a class="btn btn-info" href="{{ route('useractivities.show',$useractivities->id) }}">Show</a>
-    
-                    <a class="btn btn-primary" href="{{ route('useractivities.edit',$useractivities->id) }}">Edit</a>
-   
-                    @csrf
-                    @method('DELETE')
-      
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
+
+<div class="table-responsive">
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Utilisateur</th>
+                <th class="align-middle">Retirer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (count($tableauUsers) > 0)
+            @foreach ($tableauUsers as $user)
+            <tr>
+                <td class="align-middle">{{ $user }}</td>
+                <td class="d-flex justify-content-around flex-wrap">
+                    <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#{{"delete_activities_" . $userActivity->id}}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+            @endforeach
+            @else
+            <tr>
+                <td class="align-middle" colspan="5">Vous n'avez pas d'activités enregistrées</td>
+            </tr>
+            @endif
+        </tbody>
     </table>
-  
-      
+</div>     
 @endsection
