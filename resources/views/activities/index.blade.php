@@ -241,7 +241,6 @@
                         alert("Erreur " + xhr.status + " : " + xhr.statusText);
                     }else{ 
                         console.log(xhr.response);
-
                     }
                 };
                 xhr.onerror = function(){

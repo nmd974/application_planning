@@ -12,10 +12,6 @@
                 @csrf
                 <div class="modal-body">
                     <legend>{{ $userActivity->label }}</legend>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="label">
-                        <label>Libellé<span class="text-danger">*</span></label>
-                    </div>
                     <div class="mb-3">
                         <label for="day" class="form-label">Date</label>
                         <input type="date" class="form-control" id="day" name="day">
@@ -83,7 +79,7 @@
             @endforeach
             @else
             <tr>
-                <td class="align-middle" colspan="5">Vous n'avez pas d'activités enregistrées</td>
+                <td class="align-middle" colspan="2">Vous n'avez pas d'activités enregistrées</td>
             </tr>
             @endif
         </tbody>

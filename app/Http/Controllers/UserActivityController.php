@@ -44,16 +44,13 @@ class UserActivityController extends Controller
     {
         //
         $this->validate($request, [
-            'label' => 'required|max:255',
             'id' => 'required|integer',
             'day' => 'required|date',
             'users' => 'required'
         ]);
         
         $activity = new UserActivity();
-        $activity->label = $request['label'];
         $activity->day = date("Y-m-d", strtotime($request["day"]));
-        $activity->archived = false;
         $activity->user_id = $request['users'];
         $activity->activity_id = $request['id'];
 
@@ -138,7 +135,14 @@ class UserActivityController extends Controller
         $content = DB::table('user_activities')
             ->where('user_id', '=', $id)
             ->where('day', '=', date("Y-m-d"))
+            ->join('users', function ($join) {
+                $join->on('user_activities.user_id', '=', 'users.id');
+            })
+            ->join('activities', function ($join) {
+                $join->on('user_activities.activity_id', '=', 'activities.id');
+            })
             ->get();
+            
         return json_encode($content);
 
 
