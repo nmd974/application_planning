@@ -23,7 +23,7 @@ class ActivityFactory extends Factory
     public function definition()
     {
         return [
-            'label' => $this->faker->words($nb = 5),
+            'label' => $this->faker->text($maxNbChars = 20),
             'start' => date("Y-m-d H:i:s", time()),
             'end' => date("Y-m-d H:i:s", time() + 7200),
             'archived' => false,
