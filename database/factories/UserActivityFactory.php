@@ -1,0 +1,33 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\UserActivity;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+class UserActivityFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = UserActivity::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        
+        return [
+            'day' => date("Y-m-d", time()),
+            'user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'activity_id' => $this->faker->numberBetween($min = 1, $max = 10)
+        ];
+    }
+
+}

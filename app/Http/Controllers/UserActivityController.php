@@ -141,6 +141,7 @@ class UserActivityController extends Controller
             ->join('activities', function ($join) {
                 $join->on('user_activities.activity_id', '=', 'activities.id');
             })
+            ->orderBy('start', 'ASC')
             ->get();
             
         return json_encode($content);
