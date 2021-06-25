@@ -22,10 +22,11 @@ class UserActivityFactory extends Factory
      */
     public function definition()
     {
-        
+        $user_id = $this->faker->numberBetween($min = 1, $max = 10);
         return [
             'day' => date("Y-m-d", time()),
-            'user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'token' => md5($user_id).md5(date("Y-m-d", time())),
+            'user_id' => $user_id,
             'activity_id' => $this->faker->numberBetween($min = 1, $max = 10)
         ];
     }

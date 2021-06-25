@@ -53,6 +53,7 @@ class UserActivityController extends Controller
         $activity->day = date("Y-m-d", strtotime($request["day"]));
         $activity->user_id = $request['users'];
         $activity->activity_id = $request['id'];
+        $activity->token = md5($request['users']).md5(date("Y-m-d", strtotime($request["day"])));
 
         if($activity->save()){
             return redirect()->route('useractivities.show', $request['id'])->with(['messageSuccess' => "Activité créée avec succès"]);
@@ -127,14 +128,13 @@ class UserActivityController extends Controller
      * @param  \App\Models\UserActivity  $userActivity
      * @return \Illuminate\Http\Response
      */
-    public function show_planning($id)
+    public function show_planning($token)
     {
         //
 
         $response = array();
         $content = DB::table('user_activities')
-            ->where('user_id', '=', $id)
-            ->where('day', '=', date("Y-m-d"))
+            ->where('token', '=', $token)
             ->join('users', function ($join) {
                 $join->on('user_activities.user_id', '=', 'users.id');
             })

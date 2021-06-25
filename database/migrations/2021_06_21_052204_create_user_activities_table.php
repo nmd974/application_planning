@@ -16,6 +16,7 @@ class CreateUserActivitiesTable extends Migration
         Schema::create('user_activities', function (Blueprint $table) {
             $table->id();
             $table->date('day');
+            $table->string('token');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('activity_id');
