@@ -16,6 +16,17 @@ En tant que|Je veux|Afin de|Taches|Priorite
 ||||Sécuriser le formulaire
 ✔Utilisateur|Affecter une activité à une personne|Visualiser les activités sur une date|Fonction d'ajout de l'id de l'activité à une heure et date
 
+# TASKS
+
+- [ ] Créer la table utilisateur et sa vue d'administration
+- [ ] Créer la table role et sa vue d'administration
+- [ ] Créer la table activites et sa vue d'administration
+- [ ] Créer la table promotion et sa vue d'administration
+- [ ] Créer la table d'association user_activity et sa vue d'administration
+- [ ] Créer le dossier VUE JS pour l'affichage du planning
+- [ ] Générer un code pour accéder au planning de la personne connectée
+- [ ] Générer un QR code pour la tache précédente
+- [ ] Générer une documentation pour l'utilisation de l'application
 
 # MCD
 
