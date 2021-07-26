@@ -5,7 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class promotion extends Model
+class Promotion extends Model
 {
     use HasFactory;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'label',
+        
+    ];
+    
+
+    public function promotion()
+    {
+        return $this->belongsToMany(Promotion::class, 'promotion');
+    }
 }

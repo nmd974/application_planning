@@ -25,6 +25,9 @@
         <li class="nav-item">
           <a class="nav-link active" href="\roles">Roles</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="\promotion">Promotion</a>
+        </li>
        
       </ul>
     </div>
