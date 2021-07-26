@@ -54,7 +54,7 @@ class UserController extends Controller
         User::create($request->all());
      
         return redirect()->route('users.index')
-                        ->with('success','L\'utilisateur à bien été crée.');
+                        ->with('messageSuccess','L\'utilisateur à bien été crée.');
     }
 
     /**
@@ -101,7 +101,7 @@ class UserController extends Controller
         $user->update($request->all());
     
         return redirect()->route('users.index')
-                        ->with('success','L\'utilisateur à bien été modifié');
+                        ->with('messageSuccess','L\'utilisateur à bien été modifié');
     }
 
     /**
@@ -115,5 +115,5 @@ class UserController extends Controller
         $user->delete();
     
         return redirect()->route('users.index')
-                        ->with('success','L\'utilisateur à bien été supprimé');
+                        ->with('messageSuccess','L\'utilisateur à bien été supprimé');
     }}
