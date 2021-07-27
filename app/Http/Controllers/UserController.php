@@ -49,9 +49,9 @@ class UserController extends Controller
             'birthday' => 'required',
             'role_id' => 'required',
         ],
-        
+
         [
-            'required' => 'Le champ :attribute est requis!'
+            'required' => 'Le champ :attribute est requis!',
         ]);
 
         $request['state'] = true;

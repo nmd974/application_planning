@@ -46,6 +46,9 @@ class ActivityController extends Controller
             'end_date' => 'required|date',
             'start_time' => 'required',
             'end_time' => 'required'
+        ],
+        [
+            'required' => 'Le champ :attribute est requis'
         ]);
 
         $start = date("Y-m-d H:i:s", strtotime($request["start_date"] . " " . $request["start_time"] . ":00"));
