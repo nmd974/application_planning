@@ -13,8 +13,7 @@
                 <div class="modal-body">
                     <legend>{{ $userActivity->label }}</legend>
                     <div class="mb-3">
-                        <label for="day" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="day" name="day">
+                            <input value="{{ explode(" ", $userActivity->start)[0] }}" type="date" class="form-control" id="day" name="day" hidden>
                     </div>
                     <div class="mb-3">
                         <select class="form-select" name="users" id="users_select">
@@ -84,5 +83,5 @@
             @endif
         </tbody>
     </table>
-</div>     
+</div>
 @endsection

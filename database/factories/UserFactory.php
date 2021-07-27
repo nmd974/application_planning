@@ -27,7 +27,7 @@ class UserFactory extends Factory
         return [
             'first_name' => $this->faker->firstName($g),
             'last_name' => $this->faker->lastName,
-            'promotion' => "CDA#2021",
+            'promotion_id' => 1,
             'birthday' => $this->faker->dateTimeThisCentury($max = 'now'),
             'state' => true,
             'email' => $this->faker->unique()->safeEmail(),

@@ -18,11 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('first_name');
             $table->string('email')->unique();
-            $table->string('promotion');
             $table->date('birthday');
             $table->boolean('state');
-            $table->foreignId('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');;
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('promotion_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

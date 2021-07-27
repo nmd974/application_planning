@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $users = User::all();
         $roles = Role::all();
-        
+
         return view('users.index',compact('users'),['roles'=> $roles])
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -28,7 +28,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function create()
-    {        
+    {
         $roles = Role::all();
         return view('users.create', ['roles'=> $roles]);
     }
@@ -55,9 +55,9 @@ class UserController extends Controller
         ]);
 
         $request['state'] = true;
-    
+
         User::create($request->all());
-     
+
         return redirect()->route('users.index')
                         ->with('messageSuccess','L\'utilisateur a bien été crée.');
     }
@@ -70,7 +70,7 @@ class UserController extends Controller
      */
      public function show(User $user)
     {
-        
+
     }
 
     /**
@@ -102,9 +102,9 @@ class UserController extends Controller
             'birthday' => 'required',
             'role_id' => 'required',
         ]);
-    
+
         $user->update($request->all());
-    
+
         return redirect()->route('users.index')
                         ->with('messageSuccess','L\'utilisateur a bien été modifié');
     }
@@ -118,7 +118,7 @@ class UserController extends Controller
      public function destroy(User $user)
     {
         $user->delete();
-    
+
         return redirect()->route('users.index')
                         ->with('messageSuccess','L\'utilisateur a bien été supprimé');
     }}
