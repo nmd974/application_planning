@@ -25,7 +25,6 @@
         </div>
     </div>
 </div>
-
 <!-- *******************************************************************************************************************************-->
 <!-- ZONE UPDATE AND DELETE -->
 <!-- TABLE poste -->
@@ -88,7 +87,7 @@
 @endif
 <div class="d-flex justify-content-between">
     <div>
-        <h2>Gestion des promotion</h2>
+        <h2>Gestion des promotions</h2>
     </div>
     <div>
         <button type="button" class="btn btn-success mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_promotion">
