@@ -40,7 +40,9 @@ class RoleController extends Controller
     {
         $request->validate([
             'label' => 'required',
-            
+        ],
+        [
+            'required' => 'Le champ :attribute est requis'
         ]);
         $request['state'] = "disabled";
     

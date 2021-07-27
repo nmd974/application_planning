@@ -48,7 +48,12 @@ class UserController extends Controller
             'promotion' => 'required',
             'birthday' => 'required',
             'role_id' => 'required',
+        ],
+
+        [
+            'required' => 'Le champ :attribute est requis!',
         ]);
+
         $request['state'] = true;
     
         User::create($request->all());

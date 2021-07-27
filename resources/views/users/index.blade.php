@@ -1,6 +1,16 @@
 @extends('layout.layout')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Oops!</strong> Une erreur est survenue.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="modal fade" id="create_users" tabindex="-1" aria-labelledby="create_usersLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
