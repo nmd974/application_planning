@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class PromotionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::latest()->paginate(5);
+        $promotion = Promotion::latest()->paginate(5);
     
-        return view('roles.index',compact('roles'))
+        return view('promotion.index',compact('promotion'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
      public function create()
     {
-        return view('roles.create');
+        return view('promotion.create');
     }
 
     /**
@@ -44,66 +44,66 @@ class RoleController extends Controller
         ]);
         $request['state'] = "disabled";
     
-        Role::create($request->all());
+        Promotion::create($request->all());
      
-        return redirect()->route('roles.index')
-                        ->with('messageSuccess','Le role a bien été crée.');
+        return redirect()->route('promotion.index')
+                        ->with('messageSuccess','La promotion a bien été crée.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Promotion  $promotion
      * @return \Illuminate\Http\Response
      */
-     public function show(Role $role)
+     public function show(Promotion $promotion)
     {
         
-        return view('roles.show',compact('role'));
+        return view('promotion.show',compact('promotion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Promotion  $promotion
      * @return \Illuminate\Http\Response
      */
-     public function edit(Role $role)
+     public function edit(Promotion $promotion)
     {
         
-        return view('roles.edit',compact('role'));
+        return view('promotion.edit',compact('promotion'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Promotion  $promotion
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, Role $role)
+     public function update(Request $request, Promotion $promotion)
     {
         $request->validate([
             'label' => 'required',
             
         ]);
     
-        $role->update($request->all());
+        $promotion->update($request->all());
     
-        return redirect()->route('roles.index')
-                        ->with('messageSuccess','Le role a bien été modifié');
+        return redirect()->route('promotion.index')
+                        ->with('messageSuccess','La promotion a bien été modifié');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Promotion  $promotion
      * @return \Illuminate\Http\Response
      */
-     public function destroy(Role $role)
+     public function destroy(Promotion $promotion)
     {
-        $role->delete();
+        $promotion->delete();
     
-        return redirect()->route('roles.index')
-                        ->with('messageSuccess','Le role a bien été supprimé');
+        return redirect()->route('promotion.index')
+                        ->with('messageSuccess','La Promotion a bien été supprimé');
     }}

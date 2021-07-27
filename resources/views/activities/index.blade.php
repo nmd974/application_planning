@@ -222,7 +222,7 @@
     </table>
 </div>
 
-<script>
+{{-- <script>
     var btn = document.querySelectorAll(".table-responsive tbody tr td button");
     console.log("test");
     btn.forEach(element => {
@@ -257,5 +257,5 @@
             
         })
     })
-    </script>
+    </script> --}}
     @endsection
