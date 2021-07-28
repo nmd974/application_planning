@@ -29,8 +29,8 @@
 <!-- ZONE UPDATE AND DELETE -->
 <!-- TABLE poste -->
 <!-- *******************************************************************************************************************************-->
-@if ($promotion->count() > 0)
-@foreach ($promotion as $r)
+@if ($promotions->count() > 0)
+@foreach ($promotions as $r)
 <div class="modal fade" id="edit_promotion_{{$r->id}}" tabindex="-1" aria-labelledby="edit_promotion_{{$r->id}}Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -107,8 +107,8 @@
             </tr>
         </thead>
         <tbody>
-            @if ($promotion->count() > 0)
-            @foreach ($promotion as $r)
+            @if ($promotions->count() > 0)
+            @foreach ($promotions as $r)
             <tr>
                 <td class="align-middle">{{ $r->label }}</td>
 

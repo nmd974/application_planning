@@ -2,14 +2,14 @@
 
 @section('content')
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Oops!</strong> Une erreur est survenue.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <strong>Oops!</strong> Une erreur est survenue.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 <div class="modal fade" id="create_users" tabindex="-1" aria-labelledby="create_usersLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -37,7 +37,11 @@
 
                     <div class="mb-3">
                         <strong>Promotion</strong>
-                        <input type="text" name="promotion" class="form-control" placeholder="Promotion">
+                        <select name="promotion_id" class="form-control">
+                            @foreach($promotions as $promotion)
+                            <option value='{{ $promotion->id }}'>{{ $promotion->label }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <strong>Date de naissance</strong>
@@ -73,7 +77,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edit_users_{{$u->id}}Label">Modifier unutilisateur</h5>
+                <h5 class="modal-title" id="edit_users_{{$u->id}}Label">Modifier un utilisateur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="{{ route('users.update', $u->id) }}">
@@ -96,7 +100,11 @@
 
                     <div class="mb-3">
                         <strong>Promotion</strong>
-                        <input type="text" name="promotion" class="form-control" placeholder="Promotion" value="{{$u->promotion}}">
+                        <select name="promotion_id" class="form-control">
+                            @foreach($promotions as $promotion)
+                            <option value='{{ $promotion->id }}'>{{ $promotion->label }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <strong>Date de naissance</strong>
@@ -161,6 +169,7 @@
 @include('includes.message-block')
 
 <div class="table-responsive">
+    <!-- tableau affichage utilisateur -->
     <table class="table table-striped text-center">
         <thead>
             <tr>
@@ -183,11 +192,13 @@
                 <td class="align-middle">{{ $u->last_name }}</td>
                 <td class="align-middle">{{ $u->first_name }}</td>
                 <td class="align-middle">{{ $u->email }}</td>
-                <td class="align-middle">{{ $u->promotion }}</td>
+                <td class="align-middle">{{ App\Models\Promotion::where(['id' => $u->promotion_id])->get('label')[0]->label }}</td>
                 <td class="align-middle">{{ $u->birthday }}</td>
                 <td class="align-middle">
                     @if ($u->state ==1)
                     actif
+                    @else
+                    inactif
                     @endif
                 </td>
                 <td class="align-middle">{{ App\Models\Role::where(['id' => $u->role_id])->get('label')[0]->label }}</td>
