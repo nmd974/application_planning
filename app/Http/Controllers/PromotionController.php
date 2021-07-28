@@ -12,9 +12,18 @@ class PromotionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $promotions = Promotion::latest()->paginate(5);
+        $promotions = Promotion::where([
+            ['label', '!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('label', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate();
     
         return view('promotion.index',compact('promotions'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

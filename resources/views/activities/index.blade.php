@@ -11,6 +11,31 @@
         </ul>
     </div>
 @endif
+<!--Formulaire de recherche des activités -->
+<div class="mt-5 mb-5">
+        <div class="mx-auto pull-right">
+            <div class="">
+                <form action="{{ route('activities.index') }}" method="GET" role="search">
+                    <div class="input-group">
+                        <span class="input-group-btn mr-5 mt-1">
+                            <button class="btn btn-info" type="submit" title="Search activities">
+                                <span class="fas fa-search"></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control mr-2" name="term" placeholder="Rechercher une activité" id="term">
+                        <a href="{{ route('activities.index') }}" class=" mt-1">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                    <span class="fas fa-sync-alt"></span>
+                                </button>
+                            </span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

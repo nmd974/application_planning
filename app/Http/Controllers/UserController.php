@@ -14,9 +14,22 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::where([
+            ['last_name', '!=', Null],
+            ['state', '!=', 0],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('last_name', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('first_name', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('email', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate();
+
         $roles = Role::all();
         $promotions = Promotion::all();
         return view('users.index',compact('users','roles','promotions'),['promotions'=>$promotions],['roles'=> $roles])
