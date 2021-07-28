@@ -14,9 +14,9 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotion = Promotion::latest()->paginate(5);
+        $promotions = Promotion::latest()->paginate(5);
     
-        return view('promotion.index',compact('promotion'))
+        return view('promotion.index',compact('promotions'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
