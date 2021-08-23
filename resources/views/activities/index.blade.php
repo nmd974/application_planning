@@ -1,5 +1,10 @@
 @extends('layout.layout')
 
+@section('title')
+    Planning || Activités
+@endsection
+
+
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -12,7 +17,7 @@
     </div>
 @endif
 <!--Formulaire de recherche des activités -->
-<div class="mt-5 mb-5">
+{{-- <div class="mt-5 mb-5">
         <div class="mx-auto pull-right">
             <div class="">
                 <form action="{{ route('activities.index') }}" method="GET" role="search">
@@ -34,21 +39,24 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 <div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="create_activitiesLabel">Créer une activité</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('activities.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="form-floating mb-3">
+                        <label>Libellé
+                            <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="label">
-                        <label>Libellé<span class="text-danger">*</span></label>
                     </div>
                     <legend>Début</legend>
                     <div class="mb-3">
@@ -89,15 +97,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="edit_activities_{{$u->id}}Label">Modifier une activité</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('activities.update', $u->id) }}">
                 @csrf
                 @method('patch')
                 <div class="modal-body">
                     <div class="form-floating mb-3">
+                        <label>Libellé
+                            <span class="text-danger">*</span>
+                        </label>
                         <input type="text" class="form-control" name="label" value="{{ $u->label }}">
-                        <label>Libellé<span class="text-danger">*</span></label>
                     </div>
                     <legend>Début</legend>
                     <div class="mb-3">
@@ -181,7 +193,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete_activities_{{$u->id}}Label">Suppression d'une activité</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('activities.destroy', $u->id) }}">
                 @method('DELETE')
@@ -201,31 +215,34 @@
 </div>
 @endforeach
 @endif
-<div class="d-flex justify-content-between">
-    <div>
-        <h2>Gestion des activités</h2>
-    </div>
-    <div>
-        <button type="button" class="btn btn-success mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_activities">
-            <i class="fa fa-plus" aria-hidden="true"></i> Créer une activité
-        </button>
-    </div>
-</div>
-
-@include('includes.message-block')
-
-<div class="table-responsive">
-    <table class="table table-striped text-center">
-        <thead>
-            <tr>
-                <th scope="col">Libellé</th>
-                <th scope="col">Début</th>
-                <th scope="col">Fin</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if ($activities->count() > 0)
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h3>Gestion des activités</h3>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-info mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_activities">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Créer une activité
+                    </button>
+                </div>
+            </div>
+          </div>
+          @include('includes.message-block')
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="10">
+                <thead>
+                  <tr>
+                  <th>libellé</th>
+                  <th>Début</th>
+                  <th>Fin</th>
+                  <th><center>Action</center></th>
+                </tr>
+                </thead>
+                  @if ($activities->count() > 0)
             @foreach ($activities as $u)
             <tr>
                 <td class="align-middle">{{ $u->label }}</td>
@@ -241,7 +258,7 @@
                     </button>
                     
                     <a href="{{route("useractivities.show" , $u->id)}}">
-                        <button type="button" class="btn btn-primary me-4">
+                        <button type="button" class="btn btn-info me-4">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
                     </a>
@@ -253,9 +270,12 @@
                 <td class="align-middle" colspan="5">Vous n'avez pas d'activités enregistrées</td>
             </tr>
             @endif
-        </tbody>
-    </table>
-</div>
+                  </tbody>
+                </table> 
+            </div>
+      </div>
+    </div>
+  </div>
 
 {{-- <script>
     var btn = document.querySelectorAll(".table-responsive tbody tr td button");
@@ -287,10 +307,13 @@
                     }
                 };
             }else{
-
             }
             
         })
     })
     </script> --}}
+    @endsection
+
+    @section('scripts')
+
     @endsection

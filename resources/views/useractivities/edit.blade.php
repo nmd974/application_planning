@@ -1,5 +1,10 @@
 @extends('layout.layout')
 
+@section('title')
+    Planning || Activités utilisateurs
+@endsection
+
+
 @section('content')
 <div class="modal fade" id="create_activities" tabindex="-1" aria-labelledby="create_activitiesLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -37,22 +42,30 @@
         </div>
     </div>
 </div>
-
-<div class="d-flex justify-content-between">
-    <div>
-        <h2>{{$userActivity->label}}</h2>
-    </div>
-    <div>
-        <button type="button" class="btn btn-success mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_activities">
-            <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un utilisateur
-        </button>
-    </div>
-</div>
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h3>{{$userActivity->label}}</h3>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_activities">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un utilisateur
+                    </button>
+                </div>
+            </div>
+          </div>
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success">
     <p>{{ $message }}</p>
 </div>
+</div>
+</div>
+</div>
+
 @endif
 
 

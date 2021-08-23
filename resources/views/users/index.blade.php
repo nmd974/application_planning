@@ -1,5 +1,9 @@
 @extends('layout.layout')
 
+@section('title')
+    Planning || Utilisateurs
+@endsection
+
 @section('content')
 @if ($errors->any())
 <div class="alert alert-danger">
@@ -13,7 +17,7 @@
 @endif
 
 <!--Formulaire de recherche des utilisateurs -->
-<div class="mt-5 mb-5">
+{{-- <div class="mt-5 mb-5">
         <div class="mx-auto pull-right">
             <div class="">
                 <form action="{{ route('users.index') }}" method="GET" role="search">
@@ -35,14 +39,16 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 <div class="modal fade" id="create_users" tabindex="-1" aria-labelledby="create_usersLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="create_usersLabel">Créer un utilisateur</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('users.store') }}">
                 @csrf
@@ -104,7 +110,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="edit_users_{{$u->id}}Label">Modifier un utilisateur</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('users.update', $u->id) }}">
                 @csrf
@@ -161,7 +169,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delete_users_{{$u->id}}Label">Suppression d'un utilisateur</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="post" action="{{ route('users.destroy', $u->id) }}">
                 @method('DELETE')
@@ -181,25 +191,28 @@
 </div>
 @endforeach
 @endif
-<div class="d-flex justify-content-between">
-    <div>
-        <h2>Gestion des utilisateurs</h2>
-    </div>
-    <div>
-        <button type="button" class="btn btn-success mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_users">
-            <i class="fa fa-plus" aria-hidden="true"></i> Créer un utilisateur
-        </button>
-    </div>
-</div>
-
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h3>Gestion des utilisateurs</h3>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-info mt-md-0 mt-3" data-bs-toggle="modal" data-bs-target="#create_users">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Créer une utilisateurs
+                    </button>
+                </div>
+            </div>
+          </div>
 @include('includes.message-block')
-
 <div class="table-responsive">
     <!-- tableau affichage utilisateur -->
     <table class="table table-striped text-center">
         <thead>
             <tr>
-                <th scope="col">No</th>
+                <th scope="col">N°</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
                 <th scope="col">Adresse mail</th>
@@ -252,6 +265,8 @@
         </tbody>
     </table>
 </div>
-
+</div>
+</div>
+</div>
 
 @endsection
