@@ -20,7 +20,7 @@ class UserActivityController extends Controller
         //
         $useractivities = UserActivity::all();
 
-    
+
         return view('useractivities.index',compact('useractivities'));
     }
 
@@ -48,7 +48,7 @@ class UserActivityController extends Controller
             'day' => 'required|date',
             'users' => 'required'
         ]);
-        
+
         $activity = new UserActivity();
         $activity->day = date("Y-m-d", strtotime($request["day"]));
         $activity->user_id = $request['users'];
@@ -143,8 +143,8 @@ class UserActivityController extends Controller
             })
             ->orderBy('start', 'ASC')
             ->get();
-            
-        return json_encode($content);
+
+        return $content;
 
 
     }
