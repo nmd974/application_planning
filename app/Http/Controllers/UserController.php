@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,12 +14,25 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        $roles = Role::all();
+        $users = User::where([
+            ['last_name', '!=', Null],
+            ['state', '!=', 0],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('last_name', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('first_name', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('email', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate();
 
-        return view('users.index',compact('users'),['roles'=> $roles])
+        $roles = Role::all();
+        $promotions = Promotion::all();
+        return view('users.index',compact('users','roles','promotions'),['promotions'=>$promotions],['roles'=> $roles])
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -30,7 +44,9 @@ class UserController extends Controller
      public function create()
     {
         $roles = Role::all();
-        return view('users.create', ['roles'=> $roles]);
+        $promotions = Promotion::all();
+
+        return view('users.create', ['promotions' => $promotions], ['roles' => $roles]);
     }
 
     /**
@@ -45,7 +61,7 @@ class UserController extends Controller
             'last_name' => 'required',
             'first_name' => 'required',
             'email' => 'required',
-            'promotion' => 'required',
+            'promotion_id' => 'required',
             'birthday' => 'required',
             'role_id' => 'required',
         ],
@@ -82,7 +98,9 @@ class UserController extends Controller
      public function edit(User $user)
     {
         $roles = Role::all();
-        return view('users.edit',compact('user'), ['roles' => $roles]);
+        $promotions = Promotion::all();
+        return view('users.edit',compact('user','roles','promotions'),['promotions' => $promotions],['roles' => $roles]);
+
     }
 
     /**
@@ -98,7 +116,7 @@ class UserController extends Controller
             'last_name' => 'required',
             'first_name' => 'required',
             'email' => 'required',
-            'promotion' => 'required',
+            'promotion_id' => 'required',
             'birthday' => 'required',
             'role_id' => 'required',
         ]);

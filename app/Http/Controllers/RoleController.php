@@ -12,9 +12,18 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::latest()->paginate(5);
+        $roles = Role::where([
+            ['label', '!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('label', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate();
     
         return view('roles.index',compact('roles'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

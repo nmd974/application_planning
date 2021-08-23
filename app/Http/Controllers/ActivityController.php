@@ -13,10 +13,19 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $activities = Activity::where(['archived' => false])->get();
+        $activities = Activity::where([
+            ['label', '!=', Null],
+            ['archived', '==', 'false'],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('label', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate();
         $users = User::where(['state' => true])->get();
         return view('activities.index', ['activities' => $activities, 'users' => $users]);
     }
